@@ -35,6 +35,7 @@ $(document).ready(function start() {
   // Class Identifier to change colour or row to suit time of day
   var hour = dayjs().hour()
   console.log('hour:' + hour)
+  
   //hour changer to test daytime functionality 
   //hour = 12
 
