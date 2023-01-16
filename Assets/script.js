@@ -1,30 +1,25 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
 var currentDay = document.getElementById('currentDay')
+var keyId = ''
 
-for ( var i = 0, len = localStorage.length; i < len; ++i ) {
-  //console.log( localStorage.getItem( localStorage.key( i ) ) );
-}
-
-//var key = $('.row').attr('id')
-//console.log(key)
-for ( var i = 9, len = 17; i <= len; i++ ){
-  var key = document.getElementById(i)
-  //console.log(key)
-  var keyid = key.attr('id')
-  console.log(keyid)
-}
-
-
+//function runs when DOM is ready to run JS Code
 $(document).ready(function start() {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" isd of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  
+
+  //gets localstorage data via key and inputs into appropriate time box
+  var key = $('.row').attr('id')
+  //console.log(key)
+  for ( var i = 9, len = 17; i <= len; i++ ){
+    var key = document.getElementById(i)
+    //console.log(key)
+    keyId = key.getAttribute('id')
+    console.log(keyId + 't')
+
+    var memoryItem = localStorage.getItem(keyId + 't')
+  console.log(memoryItem)
+  //inputs localstorage memory to HTML
+  $('#' + keyId).children('textarea').html(memoryItem);
+  }
+
+  //Waits for save button click to upload inputted text to localstorage
   $('.btn').click(function(){
     var id = $(this).parent().attr('id')
     //console.log(id)
@@ -37,10 +32,10 @@ $(document).ready(function start() {
     localStorage.setItem(id + 't', input)
   })
   
-  
   // Class Identifier to change colour or row to suit time of day
   var hour = dayjs().hour()
-  console.log(hour)
+  console.log('hour:' + hour)
+  //hour changer to test daytime functionality 
   //hour = 12
 
   if ($('#'+hour).attr('id') == hour){
@@ -56,17 +51,10 @@ $(document).ready(function start() {
     //console.log(i)
     $('#'+i).addClass('future')
   }
-
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
   
-
-  
-//Self updating local time for header 
+  //Self updating local time for header 
   function time () {
     var currentDate = dayjs().format('MMMM D, YYYY h:mm:ss A');
     $(currentDay).text(currentDate);
-}
-setInterval(time, 1000)
+  }setInterval(time, 1000)
 });
